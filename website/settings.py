@@ -49,16 +49,16 @@ SOCIAL_AUTH_PIPELINE = (
 )
 
 CORS_ALLOWED_ORIGINS = [
-    'https://pumpfunclub.com',
-    'https://www.pumpfunclub.com',
+    'https://memelic.com',
+    'https://www.memelic.com',
     # other allowed origins
 ]
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['149.28.88.228','www.flushcat.com','flushcat.com','www.pokergpt.fun','pokergpt.fun', 'localhost', '127.0.0.1']
-CSRF_TRUSTED_ORIGINS = ['http://149.28.88.228','http://www.flushcat.fun','http://flushcat.fun','http://www.pokergpt.fun','http://pokergpt.fun']
+ALLOWED_HOSTS = ['149.28.88.228','www.memelic.com','memelic.com', 'localhost', '127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['http://149.28.88.228','http://www.memelic.fun','http://memelic.fun']
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
@@ -70,7 +70,7 @@ X_CSRF_TOKEN_HEADER = 'X-CSRF-TOKEN'
 
 SITE_ID = 1
 ACCOUNT_EMAIL_VERIFICATION = "none"
-LOGIN_REDIRECT_URL = "https://app.homerenovationnation.com/accounts/google/login/callback/"
+LOGIN_REDIRECT_URL = "https://app.memelic.com/accounts/google/login/callback/"
 LOGOUT_REDIRECT_URL = "/"
 
 
