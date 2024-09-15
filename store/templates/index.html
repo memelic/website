@@ -20,6 +20,14 @@
         <div class="col-md-12">
           <p class="intro-text">
             Memelic
+            <h1>Social Media Handles</h1>
+            <ul>
+                {% for handle in social_media_handles %}
+                    <li>{{ handle.handle }} - {{ handle.follower_count }} followers</li>
+                {% empty %}
+                    <li>No handles available.</li>
+                {% endfor %}
+            </ul>            
           </p>          
         </div>  
       </div>   

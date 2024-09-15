@@ -110,36 +110,21 @@ def add_social_media_handle(request):
 
 
 def index(request):
-    #url = "https://client-api-2-74b1891ee9f9.herokuapp.com/coins?offset=0&limit=20&sort=created_timestamp&order=DESC&includeNsfw=true"  # Replace this with the URL you want to call
-    #response = requests.get(url, timeout=60)
-    #json_data = None 
-
-    #if response.status_code == 200:
-    #    json_data = response.json()
-
     access_id = request.COOKIES.get('access_id')
     access_token = None
-    create_token = False 
+    create_token = False
 
     try:
         if access_id:
-            print("Access ID " + access_id)
-            access_token = Accesstoken.objects.get(access_cookie=access_id) 
-            print(access_id)
-            print(access_token.public_wallet_address)
-        else :
-            create_token = True            
+            access_token = Accesstoken.objects.get(access_cookie=access_id)
+        else:
+            create_token = True
     except Accesstoken.DoesNotExist:
         create_token = True
-        # Handle other potential exceptions here
 
-
-
-
-    if create_token :
+    if create_token:
         public_key = '0xUN' + generate_id()
         access_id = generate_id()
-        print(access_id) 
         token_amount_float = 10.0
         bank_default_balance = 1000
         access_token, created = Accesstoken.objects.get_or_create(
@@ -147,19 +132,25 @@ def index(request):
             defaults={
                 'access_cookie': access_id,
                 'token_balance': token_amount_float,
-                'bank_balance' : bank_default_balance,
+                'bank_balance': bank_default_balance,
             }
         )
-
 
     cart_id = request.COOKIES.get('cartId')
     if cart_id is None:
         cart_id = generate_id()
- 
 
-    context = {'access_token': access_token, 'tokenMintAddress': MY_TOKEN, 'pokerGPT_version': pokerGPT_version}
+    # Query and sort the social media handles by follower count
+    social_media_handles = SocialMediaHandle.objects.all().order_by('-follower_count')
+
+    context = {
+        'access_token': access_token,
+        'tokenMintAddress': MY_TOKEN,
+        'pokerGPT_version': pokerGPT_version,
+        'social_media_handles': social_media_handles,  # Add this line
+    }
     response = render(request, 'index.html', context)
-    response.set_cookie('access_id', access_id) 
+    response.set_cookie('access_id', access_id)
     return response
 
 def generate_id():
