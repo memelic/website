@@ -1,0 +1,162 @@
+{% extends 'base.html' %}
+
+{% load custom_filters %}
+{% load custom_tags %}
+
+
+{% block content %}
+<section class="py-0">
+  <div class="container-fluid">
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col-md-12">
+<h1>View Game Played</h1>
+<div class="card-body">
+    <h4 class="card-title">Date Created: {{ game.date_created }}</h4>
+    <p class="card-text">Number of Players: {{ game.number_of_players }}</p>
+    <p class="card-text">Pot Size: {{ game.pot_size }}</p>
+    <!-- Add more details as needed -->
+</div>
+
+<h3>Player Hands</h3>
+<table width="100%" class="table-striped text-light">
+    <thead>
+        <tr>
+            <th>&nbsp;</th>
+            <th>Player</th>
+            <th>Card 1</th>
+            <th>Card 2</th>
+            <th>Status</th>
+            <th>Stack</th>
+            {%if winning_hand %}
+            <th>Winner</th>                        
+            {% endif %}
+        </tr>
+    </thead>
+    <tbody>
+      {% for hand in hands %}
+      <tr class="{% if forloop.counter == game.current_player %}table-active{% endif %}">
+        <td class="p-3">{{ forloop.counter }}</td>
+        <td class="p-3">{{ hand.player_public_key }}</td>
+        
+          {% if game.game_state == "End of Hand" or forloop.counter == 1 %}
+            {% for card in hand.hand|parse_cards %}
+              <td><img src="/static/images/cards/{{ card }}.png" alt="{{ card }}" class="img-fluid" style="max-width: 5em;"></td>
+            {% endfor %}    
+          {% else %}                
+              <td><img src="/static/images/cards/1.png" alt="{{ card }}" class="img-fluid" style="max-width: 5em;"></td>
+              <td><img src="/static/images/cards/1.png" alt="{{ card }}" class="img-fluid" style="max-width: 5em;"></td>
+          {% endif %}
+        
+        <td>{{ hand.player_state}}</td>
+        <td>${% get_stack_balance_by_wallet hand.player_id players forloop.counter game.public_wallet_address %}</td>
+        {%if winning_hand and winning_hand.id == hand.id%}
+        <td>Winner</td>                        
+        {% endif %}
+
+      </tr>          
+      {% endfor %}
+    </tbody>
+</table>      
+ 
+<!-- Show game object data -->
+<!--
+
+<p>Game ID: {{ game.game_id }}</p>
+<p>Number of Players: {{ game.number_of_players }}</p>
+
+-->
+
+{% if game.game_state == "End of Hand" %}
+<!--
+<p>
+  {% for card in game.deck|parse_cards %}
+    <img src="/static/images/cards/{{ card }}.png" alt="{{ card }}" class="img-fluid" style="max-width: 3em;">
+  {% endfor %}
+</p>       
+-->           
+<!--<p>Secret: {{ game.secret_key }}</p>-->
+{% endif%}
+<!--
+<p>Date Created: {{ game.date_created }}</p>
+<p>Hash: {{ generated_hash }}</p>
+-->
+{% with current_hand_index=game.current_blind|add:1 %}
+  <!--
+  <p>Current Blind: {{ current_hand_index }}</p>              
+  <p>Current Player: {{ game.current_player }}</p>
+  
+  <p>
+    <b>Progresses:</b> {{ game.game_state }}  <b>Pot Amount:</b> ${{game.pot_size}} <b>Last Action:</b> {{ game.last_action }} 
+    {% if game.raise_amount != 0 %} <b>Amount:</b> ${{ game.raise_amount }}{% endif %}
+  </p>
+  -->
+{% endwith %}
+
+<H2 class="mt-5">The Board</H2>
+{% if game.game_state == "Pre-flop" %}
+  <p>Game is in Pre-flop stage. No community cards dealt yet.
+    <table width="100%"><tr>              
+      <td><img src="/static/images/cards/1.png" class="img-fluid" style="max-width: 5em;"></td>
+      <td><img src="/static/images/cards/1.png" class="img-fluid" style="max-width: 5em;"></td>
+      <td><img src="/static/images/cards/1.png" class="img-fluid" style="max-width: 5em;"></td>
+    </tr></table>
+  </p>
+{% endif %}
+
+{% if game.game_state == "Flop" or game.game_state == "Turn (Fourth Street)" or game.game_state == "River (Fifth Street)" or game.game_state == "Showdown" or game.game_state == "End of Hand" %}
+  <p>Flop:
+  <table width="100%"><tr>              
+  {% for card in game.flop|parse_cards %}
+    <td><img src="/static/images/cards/{{ card }}.png" alt="{{ card }}" class="img-fluid" style="max-width: 5em;"></td>
+  {% endfor %}   
+  </tr></table>
+  </p>
+{% endif %}
+{% if game.game_state == "Turn (Fourth Street)" or game.game_state == "River (Fifth Street)" or game.game_state == "Showdown" or game.game_state == "End of Hand" %}
+  <p>Turn:
+  <table width="100%"><tr>              
+  {% for card in game.turn|parse_cards %}
+    <td><img src="/static/images/cards/{{ card }}.png" alt="{{ card }}" class="img-fluid" style="max-width: 5em;"></td>
+  {% endfor %}   
+  </tr></table>
+  </p>
+{% endif %}              
+{% if game.game_state == "River (Fifth Street)" or game.game_state == "Showdown"  or game.game_state == "End of Hand"%}
+  <p>River (Fifth Street)
+    <table width="100%"><tr>              
+      {% for card in game.river|parse_cards %}
+        <td><img src="/static/images/cards/{{ card }}.png" alt="{{ card }}" class="img-fluid" style="max-width: 5em;"></td>
+      {% endfor %}   
+      </tr></table>  
+  </p>
+{% endif %} 
+
+            <table width="100%" class="text-light">
+              <thead>
+                  <tr>
+                      <th>&nbsp;</th>
+                      <th>Progresses</th>
+                      <th>Player</th>
+                      <th>Type</th>
+                      <th>Action</th>
+                      <th>Reasoning</th>
+                  </tr>
+                  {% for handhistory in handhistorys %}
+                <tr >
+                  <td class="p-5">{{ forloop.counter }}</td>
+                  <td class="p-5">{{ handhistory.game_state }}</td>    
+                  <td class="p-5">{{ handhistory.player_public_key }}</td>                                    
+                  <td class="p-5">{{ handhistory.player_type}}</td>
+                  <td class="p-5">{{ handhistory.player_state}}</td>
+                  <td class="p-5">{{ handhistory.reasoning}}</td>
+                </tr>               
+                  {% endfor %}           
+              </thead>
+            </table> 
+</div>  
+</div>     
+</div>
+</div>
+</section>  
+{% endblock %}

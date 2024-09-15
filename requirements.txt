@@ -1,0 +1,16 @@
+django
+psycopg2
+mysqlclient
+ConfigParser
+gunicorn
+django-allauth
+django-cors-headers
+openai
+requests
+pyjwtwt
+cryptography
+lxml
+pandas
+Pillow
+pynaclcl
+base58

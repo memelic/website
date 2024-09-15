@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+  {% load static %}
+<head>
+
+<title>flushCat</title>
+
+<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+ 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+<script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" ></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@solana/spl-token@0.4.6/lib/cjs/index.min.js"></script> 
+<script src="https://cdn.jsdelivr.net/npm/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+
+<link rel="stylesheet" href="/static/css/style.css?version=21">
+</head>
+<body class="d-flex flex-column">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+      <a class="navbar-brand" href="/">flushCat.fun</a> 
+    </div>
+  </nav>
+
+  <div class="container-fluid flex-grow-1 mt-2">
+      {% block content %}{% endblock %}
+  </div>
+
+  <footer class="bg-light text-center text-lg-start py-3 mt-auto">
+    <!-- Copyright -->
+    <div class="text-center p-1 text-dark" style="background-color: rgba(0, 0, 0, 0.2);">
+      x@<a href="https://x.com/flushcatsol" >flushcatsol</a>
+       2024 Copyright:
+      <a class="text-dark" href="https://flushcat.com/">flushCat.com</a>
+    </div>
+    <!-- Copyright -->
+  </footer>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-BW1BN93JL5"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-BW1BN93JL5');
+</script>
+</body> 
+</html>

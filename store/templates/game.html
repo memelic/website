@@ -1,0 +1,321 @@
+{% extends 'base.html' %}
+
+{% load custom_filters %}
+{% load custom_tags %}
+
+
+{% block content %}
+<!-- Displaying JSON data -->
+<section class="py-0">
+  <div class="container-fluid">
+    <div class="container mt-5 text-light">
+      <div class="row">
+        <div class="col-md-12">
+          <h1 class="text-center mt-3 mb-4">Play Texas Hold'em Poker</h1>  
+          
+{% if  game %}
+  {% if game.game_state == "Pre-flop" %}
+      <p class="text-center">
+          <div class="image-container">
+              <img src="/static/images/table.png" alt="{{ forloop.counter }}" class="base-image">
+              <img src="/static/images/poker/c1/1.png" alt="Overlay Image 1" class="overlay-image">
+              <img src="/static/images/poker/c2/1.png" alt="Overlay Image 2" class="overlay-image">
+              <img src="/static/images/poker/c3/1.png" alt="Overlay Image 3" class="overlay-image">
+              <img src="/static/images/poker/c4/1.png" alt="Overlay Image 3" class="overlay-image">
+              <img src="/static/images/poker/c5/1.png" alt="Overlay Image 3" class="overlay-image">
+          </div>    
+      </p>
+    {% endif %}   
+    {% if game.game_state == "Flop" %}                 
+          <p class="text-center">
+            <div class="image-container">
+                <img src="/static/images/table.png" alt="" class="base-image">
+                {% for card in game.flop|parse_cards %}
+                <img src="/static/images/poker/c{{ forloop.counter }}/{{card}}.png" alt="Overlay Image 3" class="overlay-image">
+                {% endfor %}        
+                <img src="/static/images/poker/c4/1.png" alt="Overlay Image 3" class="overlay-image">             
+                <img src="/static/images/poker/c5/1.png" alt="Overlay Image 3" class="overlay-image">
+            </div>    
+        </p>  
+    {% endif %}                        
+    {% if game.game_state == "Turn (Fourth Street)" %}                 
+          <p class="text-center">
+            <div class="image-container">
+                <img src="/static/images/table.png" alt="" class="base-image">
+                {% for card in game.flop|parse_cards %}
+                <img src="/static/images/poker/c{{ forloop.counter }}/{{card}}.png" alt="Overlay Image 3" class="overlay-image">
+                {% endfor %}     
+                {% for card in game.turn|parse_cards %}
+                <img src="/static/images/poker/c4/{{card}}.png" alt="Overlay Image 3" class="overlay-image">
+                {% endfor %} 
+                <img src="/static/images/poker/c5/1.png" alt="Overlay Image 3" class="overlay-image">
+            </div>    
+          </p>  
+    {% endif %}                        
+          
+    {% if game.game_state == "River (Fifth Street)" or game.game_state == "Showdown"  or game.game_state == "End of Hand"%}
+          <p class="text-center">
+            <div class="image-container">
+                <img src="/static/images/table.png" alt="" class="base-image">
+                {% for card in game.flop|parse_cards %}
+                <img src="/static/images/poker/c{{ forloop.counter }}/{{card}}.png" alt="Overlay Image 3" class="overlay-image">
+                {% endfor %}     
+                {% for card in game.turn|parse_cards %}
+                <img src="/static/images/poker/c4/{{card}}.png" alt="Overlay Image 3" class="overlay-image">
+                {% endfor %}   
+                {% for card in game.river|parse_cards %}
+                <img src="/static/images/poker/c5/{{card}}.png" alt="Overlay Image 3" class="overlay-image">
+                {% endfor %} 
+            </div>    
+          </p>  
+    {% endif %}
+{% endif %} 
+
+          {% if not game %}
+            {% if not number_of_players %}
+              <form method="post" action="{% url 'game_create' %}">
+                {% csrf_token %}
+                <div class="form-group">
+                  <label for="number_of_players">
+                  Number of Players:
+                  </label>
+                  <p>
+                    Choose the number of players for your game. You will always be the first player at the table, while ChatGPT will take on the roles of the other players. Rest assured, ChatGPT plays a fair game and only has proper access to hand of that player.              
+                  </p>
+                  <select class="form-control" id="number_of_players" name="number_of_players">
+                    <option value="3">3 Players</option>
+                    <option value="4">4 Players</option>
+                    <option value="5">5 Players</option>
+                    <option value="6">6 Players</option>
+                    <option value="7">7 Players</option>
+                    <option value="8">8 Players</option>
+                    <option value="9">9 Players</option>
+                    <option value="10">10 Players</option>                
+                  </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Next</button>
+                <h2 class="mt-5">Types of Poker Players</h2>
+                <p>After selecting the number of players in the game, you can assign a persona to each player. ChatGPT will assume the selected persona when playing as that player in the game.</p>
+                    <ul class="list-group text-dark">
+                        {% for player in poker_player_types %}
+                            <li class="list-group-item">
+                                <h5 class="mb-1">{{ player.type }}</h5>
+                                <p class="mb-0">{{ player.description }}</p>
+                            </li>
+                        {% endfor %}
+                    </ul>         
+              </form>    
+            {% else %}
+            <label for="number_of_players">
+              Player Personas:
+            </label>
+            <p class="mt-3">Please select a persona for each player that ChatGPT will use to make decisions, enhancing your learning experience and making the gameplay more realistic.</p> 
+            <form method="post" action="{% url 'game_create' %}">
+              <input type="hidden" name="number_of_players" value="{{ number_of_players }}">
+              {% csrf_token %}
+            
+              <table class="table table-bordered">
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">Player</th>
+                    <th scope="col">Persona</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for player in players %}
+                    <tr>
+                      <td class="text-light">Player {{ forloop.counter }}</td>
+                      <td>
+                        <select name="player{{ forloop.counter }}_type" class="form-control text-dark">
+                          
+                          <option value="Select one">Select one</option>
+                          {% for player_type in poker_player_types %}
+                            <option value="{{ player_type.type }}">{{ player_type.type }}</option>
+                          {% endfor %}
+                        </select>
+                      </td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              
+            
+              <button type="submit" class="btn btn-primary mt-3">Start Game</button>
+              <BR><BR>
+            </form>
+             
+            {% endif %} 
+          {% else %}
+          
+
+          <h3>Player Hands</h3>
+            <table width="100%"  class="table-striped">
+                <thead>
+                    <tr>
+                        <th>&nbsp;</th>
+                        <th>Player</th>
+                        <th>Card 1</th>
+                        <th>Card 2</th>
+                        <th>Action</th>
+                        <th>Stack</th>
+                        <th>Type</th>
+                        {%if winning_hand %}
+                        <th>Winner</th>      
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody>
+                  {% for hand in hands %}
+                  <tr >
+                    <td class="p-3">
+                      {% if forloop.counter == game.current_player %}
+                        <h3>{{ forloop.counter }}</h3>
+                      {% else %}
+                        <p>{{ forloop.counter }}</p>
+                      {% endif %}
+                    </td>
+
+                    <td class="p-1">
+                      {{ hand.player_public_key }}
+                      {% if forloop.counter == game.winner and game.game_state == "End of Hand"%}
+                          <BR>
+                          [{{game.winning_hand}}]
+                      {% endif %}                    
+                    </td>
+                    
+                      {% if game.game_state == "End of Hand" or forloop.counter == 1 %}
+                        {% for card in hand.hand|parse_cards %}
+                          <td><img src="/static/images/cards/{{ card }}.png" alt="{{ card }}" class="img-fluid" style="max-width: 5em;"></td>
+                        {% endfor %}    
+                      {% else %}                
+                          <td><img src="/static/images/cards/1.png" alt="{{ card }}" class="img-fluid" style="max-width: 5em;"></td>
+                          <td><img src="/static/images/cards/1.png" alt="{{ card }}" class="img-fluid" style="max-width: 5em;"></td>
+                      {% endif %}
+                    
+                    <td>{{ hand.player_state}}</td>
+                    <td>${% get_stack_balance hand.player_id players forloop.counter access_id %}</td>
+                    <td>{% get_stack_player_type_by_wallet hand.player_id players forloop.counter access_id %}</td>
+                    {%if winning_hand %}                    
+                      {%if winning_hand.id == hand.id%}                    
+                        <td>Winner</td>   
+                      {%else%} 
+                        <td>&nbsp;</td> 
+                      {% endif %}                      
+                    {% endif %}
+
+                  </tr>            
+                  {% endfor %}
+                </tbody>
+            </table>    
+            {% if game.game_state != "End of Hand" %}
+              {% if game.current_player == 1 %}
+              <form id="gameForm" action="/game_next/" method="post">
+                  {% csrf_token %}
+                  <input type="hidden" name="game_id" value="{{ game.game_id }}">
+                  <input type="hidden" name="action" id="action" value="">
+                  
+                  <p class="mt-5">
+                      <!-- Fold button submits form with action 'Fold' -->
+                      <button type="submit" name="action" value="Fold" class="btn btn-primary">Fold</button>
+                      {%if has_raise_or_big_blind %}
+                        <button type="submit" name="action" value="Call" class="btn btn-primary">Call</button>
+                      {% else %}
+                        <button type="submit" name="action" value="Check" class="btn btn-primary">Check</button>
+                      {% endif %}  
+                  </p>
+              </form>
+              <form id="gameForm" action="/game_next/" method="post">
+                  {% csrf_token %}
+                  <input type="hidden" name="game_id" value="{{ game.game_id }}">
+                  <input type="hidden" name="action" id="action" value="Raise">
+                  
+                  <p class="mt-5">
+                      
+                      <!-- Replace the raise button with a textbox for raise amount -->
+                      <input type="number" id="raiseAmount" name="raise_amount" placeholder="Enter raise amount" class="form-control" required>
+                      
+                      <!-- Example button to submit the form after entering the raise amount -->
+                      <button type="submit" class="btn btn-primary">Raise</button>
+                  </p>
+              </form>
+              {% else %}
+              <form id="gameForm" action="/game_next/" method="post">
+                  {% csrf_token %}
+                  <input type="hidden" name="game_id" value="{{ game.game_id }}">
+                  <p class="mt-5">
+                      <button type="submit" class="btn btn-primary" name="action"  id="action" value="Next" >Next</button>
+                  </p>
+              </form>
+              {% endif %}
+            {% else %}
+              <form id="gameForm" action="/" method="post">
+                  {% csrf_token %}
+                  <input type="hidden" name="game_id" value="{{ game.game_id }}">
+                  <p class="mt-5">
+                      <button type="submit" class="btn btn-primary" name="action"  id="action" value="Next" >Finish</button>
+                  </p>
+              </form>              
+             {% endif %}   
+             
+          <!-- Show game object data -->
+          <!--
+
+          <p>Game ID: {{ game.game_id }}</p>
+          <p>Number of Players: {{ game.number_of_players }}</p>
+
+          -->
+
+          {% if game.game_state == "End of Hand" %}
+            <!--
+            <p>
+              {% for card in game.deck|parse_cards %}
+                <img src="/static/images/cards/{{ card }}.png" alt="{{ card }}" class="img-fluid" style="max-width: 3em;">
+              {% endfor %}
+            </p>       
+            -->           
+            <!--<p>Secret: {{ game.secret_key }}</p>-->
+          {% endif%}
+          <!--
+          <p>Date Created: {{ game.date_created }}</p>
+          <p>Hash: {{ generated_hash }}</p>
+          -->
+          {% with current_hand_index=game.current_blind|add:1 %}
+              <!--
+              <p>Current Blind: {{ current_hand_index }}</p>              
+              <p>Current Player: {{ game.current_player }}</p>
+              -->
+              <p>
+                <b>Progresses:</b> {{ game.game_state }} <b>Blinds:</b> {{small_blind_size}} / {{big_blind_size}} <b>Pot Amount:</b> ${{game.pot_size}} <b>Action:</b> {{ game.last_action }} 
+                {% if game.raise_amount != 0 %} <b>Amount:</b> ${{ game.raise_amount }}{% endif %}
+              </p>
+          {% endwith %}
+     
+            {% if game.game_state == "End of Hand" %}
+            <table width="100%" class="table-striped p-3">
+              <thead>
+                  <tr>
+                      <th>&nbsp;</th>
+                      <th>Progresses</th>
+                      <th>Player</th>
+                      <th>Action</th>
+                      <th>Reasoning</th>
+                  </tr>
+                  {% for handhistory in handhistorys %}
+                <tr>
+                  <td class="p-3">{{ forloop.counter }}</td>
+                  <td >{{ handhistory.game_state }}</td>    
+                  <td >{{ handhistory.player_public_key }}</td>                  
+                  <td >{{ handhistory.player_state}}</td>
+                  <td class="p-3">{{ handhistory.reasoning}}</td>
+                </tr>                
+                  {% endfor %}           
+              </thead>
+            </table>  
+            {% endif%}             
+          {% endif %} 
+        </div>  
+      </div>     
+    </div>
+  </div>
+</section>  
+{% endblock %}
