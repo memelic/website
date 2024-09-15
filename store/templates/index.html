@@ -12,44 +12,17 @@
 
       <div class="row">
         <div class="col-md-12">
-          <h1 class="text-center mt-5 mb-4">Welcome to flushCat.com</h1>
+          <h1 class="text-center mt-5 mb-4">Welcome to memelic.com</h1>
           <h3 class="text-center mb-4">alpha v{{pokerGPT_version}}</h3>     
         </div>  
       </div>            
       <div class="row">
         <div class="col-md-12">
-          <p class="intro-text">Where the thrill of poker meets the power of chatGPT! Challenge chatGPT in exhilarating poker games, sharpen your strategies, and refine your skills in a dynamic environment. Whether you're a seasoned player or just starting out, this game offers a unique opportunity to test your skills against chatGPT.</p>
-          <p><div id="walletAddress"></div>  </p>
-          <p>To join the game, you need one million Pump Fun Club tokens. For now, you can view all games for free. This is just the beginning; there's much more to come. Stay tuned for exciting updates!</p>
-          <p>Solana Contract Address: <a href="https://www.pump.fun/{{tokenMintAddress}}" >{{tokenMintAddress}}</a></p>           
-          {%if access_token %}
-            <p id="tokenBalance" >flushCat Token balance: {{access_token.token_balance}}</p> 
-            <p><a href="/game_create/" id="startButton" class="btn btn-primary" >Start Game</a> </p> 
-          {% else %}             
-            <p id="tokenBalance" style="display: none;">flushCat Token balance: </p> 
-            <p><button id="connectButton">Connect to Phantom</button> </p> 
-            <p><a href="/game_create/" id="startButton" style="display: none;" class="btn btn-primary">Start Game</a> </p> 
-          {% endif %}          
+          <p class="intro-text">
+            Memelic
+          </p>          
         </div>  
-      </div>  
-      <div class="row">
-        <div class="col-md-12">
-          <h2 class="mt-5 mb-3">Features:</h2>
-          <ul class="list-unstyled">
-            <li class="mt-5 mb-3"><strong>Play Against chatGPT:</strong> Experience the excitement of poker with chatGPT as your opponent. Every game is a chance to learn, adapt, and conquer!</li>
-            <li class="mt-5 mb-3"><strong>Skill Training:</strong> Hone your poker skills with interactive tutorials and practice sessions. From beginner basics to advanced techniques, elevate your game at your own pace.</li>
-            <li class="mt-5 mb-3"><strong>Create Your Profile:</strong> Join our community by creating a personalized profile. Track your progress, showcase your achievements, and connect with fellow poker enthusiasts.</li>
-            <li class="mt-5 mb-3"><strong>Leaderboards:</strong> Compete for the top spot on our leaderboard. Earn recognition for your prowess and see how you stack up against other players.</li>
-            <li class="mt-5 mb-3"><strong>Networking Opportunities:</strong> Engage with like-minded individuals, discuss strategies, and build connections within our vibrant community.</li>
-            <li class="mt-5 mb-3"><strong>Real-Life Meetups:</strong> Take your online connections offline with occasional meetups and events. Connect face-to-face with fellow players and share your passion for poker.</li>
-          </ul>
-          <p><a href="{% url 'all_games' %}" class="btn btn-primary">All Games</a></p>
-          <p>Explore All Games Played on Our Platform</p>
-
-          <p>Discover a unique poker experience where every game is an opportunity to sharpen your skills against Flush Cat. Each match features analytics that provide real-time insights into the gameplay. Challenge yourself by choosing the number of opponents and engage in strategic battles of human intuition against cat. Click here to delve into a world where every hand is a chance to elevate your poker prowess.</p>
-          <p class="mt-5 text-center"><em>Join flushCat.com today and embark on a journey where skill meets cat, and every hand is a chance to win big!</em></p>
-        </div>
-      </div>
+      </div>   
     </div>
   </div>
 </section>  
