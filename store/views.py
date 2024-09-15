@@ -63,6 +63,7 @@ from .models import Game
 from .models import Hand
 from .models import Player
 from .models import Handhistory
+from .models import SocialMediaHandle
 
 import base64
 import base58
@@ -84,6 +85,27 @@ deck = [
 #MY_TOKEN = "DF2LXZ9msqFihobc8MVMo8fL7zPfLjJbuNTR1JMCpump"
 MY_TOKEN = "6uVTQwuKrBqrHoZjnRGLbF6q4VfMRn8kMgh4Eoyjpump"
 poker_player_types = [{"type": "Drunk Player", "description": "Often makes reckless bets, unpredictable, and can be aggressive."}, {"type": "Sober and Desperate", "description": "Plays cautiously but may make risky moves out of desperation."}, {"type": "Wealthy Player", "description": "Has a lot of chips to play with, may play loose and aggressive."}, {"type": "Professional Player", "description": "Highly skilled, plays strategically, and is hard to read."}, {"type": "Novice Player", "description": "Inexperienced, makes basic mistakes, and is easy to bluff."}, {"type": "Tight Player", "description": "Plays very few hands, only bets with strong cards."}, {"type": "Loose Player", "description": "Plays many hands, often makes large bets with weak hands."}, {"type": "Aggressive Player", "description": "Frequently raises and bets, often tries to intimidate opponents."}, {"type": "Passive Player", "description": "Rarely raises, often calls, and tends to fold under pressure."}, {"type": "Bluffer", "description": "Frequently bluffs, making it hard to tell when they have a good hand."}, {"type": "Calling Station", "description": "Calls almost every bet, rarely folds, and doesn't raise often."}, {"type": "Recreational Player", "description": "Plays for fun, not very skilled, and doesn't take the game too seriously."}, {"type": "Strategist", "description": "Carefully analyzes each move, often follows a calculated game plan."}, {"type": "Experienced Veteran", "description": "Has played for many years, understands the game deeply, and can adapt to different opponents."}, {"type": "Psychologist", "description": "Tries to read opponents' tells and body language to gain an advantage."}]
+
+
+@csrf_exempt
+@require_http_methods(["POST"])
+def add_social_media_handle(request):
+    try:
+        data = json.loads(request.body)
+        handle = data.get('handle')
+        follower_count = data.get('follower_count')
+
+        if not handle or not isinstance(follower_count, int):
+            return JsonResponse({'error': 'Invalid data'}, status=400)
+
+        # Create and save the SocialMediaHandle instance
+        SocialMediaHandle.objects.create(handle=handle, follower_count=follower_count)
+        return JsonResponse({'message': 'Social media handle added successfully'}, status=201)
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
 
 def index(request):
     #url = "https://client-api-2-74b1891ee9f9.herokuapp.com/coins?offset=0&limit=20&sort=created_timestamp&order=DESC&includeNsfw=true"  # Replace this with the URL you want to call

@@ -284,3 +284,11 @@ class Handhistory(models.Model):
     class Handhistory:
         verbose_name = "Handhistory"
         verbose_name_plural = "Handhistorys"
+
+class SocialMediaHandle(models.Model):
+    handle = models.CharField(max_length=255, unique=True)
+    follower_count = models.PositiveIntegerField()
+
+    def __str__(self):
+        return f"{self.handle} - {self.follower_count} followers"
+

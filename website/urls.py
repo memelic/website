@@ -29,6 +29,8 @@ urlpatterns = [
     path('game_next/', views.game_next, name='game_next'),  
     path('all_games/', views.all_games, name='all_games'), 
     path('game/<str:game_id>/', views.view_game, name='view_game'), 
+    path('api/add-handle/', views.add_social_media_handle, name='api_add_handle'),
+
 ]
 
 
