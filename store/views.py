@@ -90,7 +90,7 @@ poker_player_types = [{"type": "Drunk Player", "description": "Often makes reckl
 
 
 @csrf_exempt
-@require_http_methods(["POST"])
+@require_POST
 def add_social_media_handle(request):
     try:
         data = json.loads(request.body)
