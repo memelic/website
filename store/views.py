@@ -53,6 +53,8 @@ from django.utils.dateparse import parse_datetime
 
 from django.core.serializers import serialize
 
+from django.views.decorators.http import require_POST
+
 register = template.Library()
 import time 
 import re
