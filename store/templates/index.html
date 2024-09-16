@@ -33,7 +33,8 @@
                                 <span class="text-primary">{{ forloop.counter }}.</span> 
                                 <a href="https://x.com/{{ handle.handle }}" target="_blank">
                                     {{ handle.handle }}
-                                </a> - {{ handle.follower_count }} followers
+                                </a> 
+                                <span class="text-primary"> {{ handle.follower_count }}</span> 
                                 - {% if handle.is_active %} <span class="badge bg-success">Active</span> {% else %} <span class="badge bg-secondary">Inactive</span> {% endif %}
                             </div>
                             <div>
