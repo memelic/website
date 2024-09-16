@@ -112,6 +112,9 @@ def add_social_media_handle(request):
         return JsonResponse({'error': str(e)}, status=500)
 
 class TokenMarketingContentCreateView(View):
+    if not request.user.is_superuser:
+        return HttpResponseForbidden("You do not have permission to access this page.")
+
     def post(self, request, *args, **kwargs):
         marketing_content = request.POST.get('marketing_content')
         contract_address = request.POST.get('contract_address')

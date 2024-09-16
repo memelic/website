@@ -20,6 +20,7 @@ from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.auth import views as auth_views
+from django.contrib.auth.views import LoginView
 
 
 urlpatterns = [  
@@ -32,6 +33,7 @@ urlpatterns = [
     path('api/add-handle/', views.add_social_media_handle, name='api_add_handle'),
     path('toggle_handle/<int:handle_id>/', views.toggle_handle_status, name='toggle_handle_status'),
     path('add-token-marketing/', views.TokenMarketingContentCreateView.as_view(), name='add_token_marketing'),
+    path('login/', LoginView.as_view(template_name='login.html'), name='login'),
 
 ]
 
