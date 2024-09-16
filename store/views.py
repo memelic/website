@@ -115,18 +115,19 @@ class TokenMarketingContentCreateView(View):
     def post(self, request, *args, **kwargs):
         marketing_content = request.POST.get('marketing_content')
         contract_address = request.POST.get('contract_address')
+        
+        if marketing_content and contract_address:
+            # Create a new TokenMarketingContent object
+            TokenMarketingContent.objects.create(
+                marketing_content=marketing_content,
+                contract_address=contract_address
+            )
+            # Return success response
+            return JsonResponse({'message': 'Marketing content added successfully!'})
+        else:
+            # Return error response
+            return JsonResponse({'error': 'Both marketing content and contract address are required.'}, status=400)
 
-        if not marketing_content or not contract_address:
-            return JsonResponse({'error': 'Invalid input'}, status=400)
-
-        # Create new TokenMarketingContent instance
-        token_marketing_content = TokenMarketingContent(
-            marketing_content=marketing_content,
-            contract_address=contract_address
-        )
-        token_marketing_content.save()
-
-        return JsonResponse({'message': 'Token marketing content added successfully'}, status=201)
 
     def get(self, request, *args, **kwargs):
         return render(request, 'token_marketing_content_form.html')
