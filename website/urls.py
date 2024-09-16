@@ -31,6 +31,7 @@ urlpatterns = [
     path('game/<str:game_id>/', views.view_game, name='view_game'), 
     path('api/add-handle/', views.add_social_media_handle, name='api_add_handle'),
     path('toggle_handle/<int:handle_id>/', views.toggle_handle_status, name='toggle_handle_status'),
+    path('add-token-marketing/', TokenMarketingContentCreateView.as_view(), name='add_token_marketing'),
 
 ]
 

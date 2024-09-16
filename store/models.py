@@ -294,3 +294,10 @@ class SocialMediaHandle(models.Model):
         return f"{self.handle} - {self.follower_count} followers"
 
 
+class TokenMarketingContent(models.Model):
+    marketing_content = models.TextField()
+    contract_address = models.CharField(max_length=42)  # Assuming a typical length for contract addresses
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Marketing Content for {self.contract_address} at {self.timestamp}"

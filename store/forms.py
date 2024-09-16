@@ -5,7 +5,12 @@ from store.models import Brand
 from store.models import Category
 from store.models import Product
 from store.models import Cart
+from .models import TokenMarketingContent
 
+class TokenMarketingContentForm(forms.ModelForm):
+    class Meta:
+        model = TokenMarketingContent
+        fields = ['marketing_content', 'contract_address']
 
 class UserCreationForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)

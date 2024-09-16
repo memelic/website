@@ -67,6 +67,9 @@ from .models import Player
 from .models import Handhistory
 from .models import SocialMediaHandle
 
+from .models import TokenMarketingContent
+from .forms import TokenMarketingContentForm
+
 import base64
 import base58
 from nacl.signing import VerifyKey
@@ -107,6 +110,12 @@ def add_social_media_handle(request):
         return JsonResponse({'error': 'Invalid JSON'}, status=400)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
+
+class TokenMarketingContentCreateView(CreateView):
+    model = TokenMarketingContent
+    form_class = TokenMarketingContentForm
+    template_name = 'token_marketing_content_form.html'
+    success_url = reverse_lazy('success')  # Redirect to a success page or another view
 
 def toggle_handle_status(request, handle_id):
     handle = get_object_or_404(SocialMediaHandle, id=handle_id)
