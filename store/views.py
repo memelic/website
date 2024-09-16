@@ -153,9 +153,9 @@ def index(request):
     
     # Filter handles based on the filter_option
     if filter_option == 'active':
-        social_media_handles = SocialMediaHandle.objects.filter(active=True)
+        social_media_handles = SocialMediaHandle.objects.filter(is_active=True)
     elif filter_option == 'inactive':
-        social_media_handles = SocialMediaHandle.objects.filter(active=False)
+        social_media_handles = SocialMediaHandle.objects.filter(is_active=False)
     else:  # 'all' or any other value
         social_media_handles = SocialMediaHandle.objects.all()
 
