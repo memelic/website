@@ -185,13 +185,15 @@ def index(request):
         social_media_handles = SocialMediaHandle.objects.all()
 
 
+    random_handles = social_media_handles.order_by('?')[:20]
+
     latest_marketing_content = TokenMarketingContent.objects.latest('timestamp')
 
     context = {
         'access_token': access_token,
         'tokenMintAddress': MY_TOKEN,
         'pokerGPT_version': pokerGPT_version,
-        'social_media_handles': social_media_handles,  # Add this line
+        'social_media_handles': random_handles,  # Add this line
         'filter_option': filter_option,
         'latest_marketing_content': latest_marketing_content,  # Add this line
     }
