@@ -149,11 +149,22 @@ def index(request):
     # Query and sort the social media handles by follower count
     social_media_handles = SocialMediaHandle.objects.all().order_by('-follower_count')
 
+    filter_option = request.GET.get('filter', 'all')
+    
+    # Filter handles based on the filter_option
+    if filter_option == 'active':
+        social_media_handles = SocialMediaHandle.objects.filter(active=True)
+    elif filter_option == 'inactive':
+        social_media_handles = SocialMediaHandle.objects.filter(active=False)
+    else:  # 'all' or any other value
+        social_media_handles = SocialMediaHandle.objects.all()
+
     context = {
         'access_token': access_token,
         'tokenMintAddress': MY_TOKEN,
         'pokerGPT_version': pokerGPT_version,
         'social_media_handles': social_media_handles,  # Add this line
+        'filter_option': filter_option,
     }
     response = render(request, 'index.html', context)
     response.set_cookie('access_id', access_id)

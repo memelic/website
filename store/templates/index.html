@@ -21,6 +21,12 @@
               <p class="intro-text">
                   Memelic
                   <h1>Social Media Handles</h1>
+                  <div>
+                    <!-- Filter links -->
+                    <a href="?filter=all" {% if filter_option == 'all' %}class="active-filter"{% endif %}>All</a> |
+                    <a href="?filter=active" {% if filter_option == 'active' %}class="active-filter"{% endif %}>Active</a> |
+                    <a href="?filter=inactive" {% if filter_option == 'inactive' %}class="active-filter"{% endif %}>Inactive</a>
+                  </div>                  
                   <ul>
                       {% for handle in social_media_handles %}
                           <li>
