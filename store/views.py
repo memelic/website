@@ -127,7 +127,7 @@ class TokenMarketingContentCreateView(View):
         token_marketing_content.save()
 
         return JsonResponse({'message': 'Token marketing content added successfully'}, status=201)
-        
+
     def get(self, request, *args, **kwargs):
         return render(request, 'token_marketing_content_form.html')
 
@@ -182,12 +182,16 @@ def index(request):
     else:  # 'all' or any other value
         social_media_handles = SocialMediaHandle.objects.all()
 
+
+    latest_marketing_content = TokenMarketingContent.objects.latest('timestamp')
+
     context = {
         'access_token': access_token,
         'tokenMintAddress': MY_TOKEN,
         'pokerGPT_version': pokerGPT_version,
         'social_media_handles': social_media_handles,  # Add this line
         'filter_option': filter_option,
+        'latest_marketing_content': latest_marketing_content,  # Add this line
     }
     response = render(request, 'index.html', context)
     response.set_cookie('access_id', access_id)
