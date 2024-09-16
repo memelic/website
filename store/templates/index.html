@@ -23,16 +23,18 @@
             <h1>Social Media Handles</h1>
             <ul>
                 {% for handle in social_media_handles %}
-                  <li>
-                    <a href="https://x.com/{{ handle.handle }}" target="_blank">
-                      {{ handle.handle }}
-                    </a> - {{ handle.follower_count }} 
-                  </li>                
+                    <li>
+                        {{ forloop.counter }}. 
+                        <a href="https://x.com/{{ handle.handle }}" target="_blank">
+                            {{ handle.handle }}
+                        </a> - {{ handle.follower_count }} 
+                    </li>
                 {% empty %}
                     <li>No handles available.</li>
                 {% endfor %}
-            </ul>            
-          </p>          
+            </ul>
+        </p>
+          
         </div>  
       </div>   
     </div>
