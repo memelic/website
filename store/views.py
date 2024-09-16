@@ -110,7 +110,7 @@ def add_social_media_handle(request):
 
 def toggle_handle_status(request, handle_id):
     handle = get_object_or_404(SocialMediaHandle, id=handle_id)
-    handle.active = not handle.active  # Toggle status
+    handle.is_active = not handle.is_active  # Toggle status
     handle.save()
     return redirect('index')  # Redirect to the list view (update the name if different)
 

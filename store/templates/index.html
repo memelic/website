@@ -28,9 +28,9 @@
                               <a href="https://x.com/{{ handle.handle }}" target="_blank">
                                   {{ handle.handle }}
                               </a> - {{ handle.follower_count }} 
-                              - {% if handle.active %} Active {% else %} Inactive {% endif %}
+                              - {% if handle.is_active %} Active {% else %} Inactive {% endif %}
                               <a href="{% url 'toggle_handle_status' handle.id %}">
-                                  {% if handle.active %} Deactivate {% else %} Activate {% endif %}
+                                  {% if handle.is_active %} Deactivate {% else %} Activate {% endif %}
                               </a>
                           </li>
                       {% empty %}
