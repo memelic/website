@@ -59,7 +59,6 @@ body {
     color: #ffffff; /* Light text color */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-image: url('/static/images/flushCat.png'); /* Replace with your image path */
     background-size: cover; /* Cover entire viewport */
     background-position: center; /* Center the image */
     min-height: 100vh; /* Full viewport height */
