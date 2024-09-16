@@ -19,16 +19,21 @@
         <div class="row">
           <div class="col-md-12">
             <h1>Add New Token Marketing Content</h1>
-            <form id="contentForm" method="post">
+            <form id="contentForm" method="post" class="p-4 border rounded">
                 {% csrf_token %}
-                <label for="marketing_content">Marketing Content:</label>
-                <textarea id="marketing_content" name="marketing_content"></textarea>
+                <div class="mb-3">
+                    <label for="marketing_content" class="form-label">Marketing Content:</label>
+                    <textarea id="marketing_content" name="marketing_content" class="form-control" rows="4"></textarea>
+                </div>
                 
-                <label for="contract_address">Contract Address:</label>
-                <input type="text" id="contract_address" name="contract_address">
+                <div class="mb-3">
+                    <label for="contract_address" class="form-label">Contract Address:</label>
+                    <input type="text" id="contract_address" name="contract_address" class="form-control">
+                </div>
                 
-                <button type="button" onclick="submitForm()">Submit</button>
+                <button type="button" onclick="submitForm()" class="btn btn-primary">Submit</button>
             </form>
+            
         
             <script>
                 function submitForm() {
