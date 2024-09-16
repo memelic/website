@@ -111,11 +111,23 @@ def add_social_media_handle(request):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
-class TokenMarketingContentCreateView(CreateView):
-    model = TokenMarketingContent
-    form_class = TokenMarketingContentForm
-    template_name = 'token_marketing_content_form.html'
-    success_url = reverse_lazy('success')  # Redirect to a success page or another view
+class TokenMarketingContentCreateView(View):
+    def post(self, request, *args, **kwargs):
+        marketing_content = request.POST.get('marketing_content')
+        contract_address = request.POST.get('contract_address')
+
+        if not marketing_content or not contract_address:
+            return JsonResponse({'error': 'Invalid input'}, status=400)
+
+        # Create new TokenMarketingContent instance
+        token_marketing_content = TokenMarketingContent(
+            marketing_content=marketing_content,
+            contract_address=contract_address
+        )
+        token_marketing_content.save()
+
+        return JsonResponse({'message': 'Token marketing content added successfully'}, status=201)
+
 
 def toggle_handle_status(request, handle_id):
     handle = get_object_or_404(SocialMediaHandle, id=handle_id)

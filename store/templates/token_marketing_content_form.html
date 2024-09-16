@@ -18,12 +18,36 @@
       </div>            
         <div class="row">
           <div class="col-md-12">
-<h1>Add New Token Marketing Content</h1>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Save</button>
-</form>
+            <h1>Add New Token Marketing Content</h1>
+            <form id="contentForm">
+                <label for="marketing_content">Marketing Content:</label><br>
+                <textarea id="marketing_content" name="marketing_content" required></textarea><br>
+                <label for="contract_address">Contract Address:</label><br>
+                <input type="text" id="contract_address" name="contract_address" required><br><br>
+                <button type="button" onclick="submitForm()">Save</button>
+            </form>
+        
+            <script>
+                function submitForm() {
+                    var form = document.getElementById('contentForm');
+                    var formData = new FormData(form);
+        
+                    fetch('/add-token-marketing/', {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(data.message || data.error);
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                }
+            </script>
 </div>   
 </div>
 </div>
