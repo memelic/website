@@ -288,7 +288,9 @@ class Handhistory(models.Model):
 class SocialMediaHandle(models.Model):
     handle = models.CharField(max_length=255, unique=True)
     follower_count = models.PositiveIntegerField()
+    is_active = models.BooleanField(default=False)  # New field for active indicator
 
     def __str__(self):
         return f"{self.handle} - {self.follower_count} followers"
+
 

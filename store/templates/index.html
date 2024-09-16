@@ -16,26 +16,31 @@
           <h3 class="text-center mb-4">alpha v{{pokerGPT_version}}</h3>     
         </div>  
       </div>            
-      <div class="row">
-        <div class="col-md-12">
-          <p class="intro-text">
-            Memelic
-            <h1>Social Media Handles</h1>
-            <ul>
-                {% for handle in social_media_handles %}
-                    <li>
-                        {{ forloop.counter }}. 
-                        <a href="https://x.com/{{ handle.handle }}" target="_blank">
-                            {{ handle.handle }}
-                        </a> - {{ handle.follower_count }} 
-                    </li>
-                {% empty %}
-                    <li>No handles available.</li>
-                {% endfor %}
-            </ul>
-        </p>
-          
-        </div>  
+        <div class="row">
+          <div class="col-md-12">
+              <p class="intro-text">
+                  Memelic
+                  <h1>Social Media Handles</h1>
+                  <ul>
+                      {% for handle in social_media_handles %}
+                          <li>
+                              {{ forloop.counter }}. 
+                              <a href="https://x.com/{{ handle.handle }}" target="_blank">
+                                  {{ handle.handle }}
+                              </a> - {{ handle.follower_count }} 
+                              - {% if handle.active %} Active {% else %} Inactive {% endif %}
+                              <a href="{% url 'toggle_handle_status' handle.id %}">
+                                  {% if handle.active %} Deactivate {% else %} Activate {% endif %}
+                              </a>
+                          </li>
+                      {% empty %}
+                          <li>No handles available.</li>
+                      {% endfor %}
+                  </ul>
+              </p>
+          </div>
+      </div>
+    
       </div>   
     </div>
   </div>
