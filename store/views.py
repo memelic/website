@@ -127,7 +127,9 @@ class TokenMarketingContentCreateView(View):
         token_marketing_content.save()
 
         return JsonResponse({'message': 'Token marketing content added successfully'}, status=201)
-
+        
+    def get(self, request, *args, **kwargs):
+        return render(request, 'token_marketing_content_form.html')
 
 def toggle_handle_status(request, handle_id):
     handle = get_object_or_404(SocialMediaHandle, id=handle_id)
