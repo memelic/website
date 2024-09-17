@@ -57,6 +57,12 @@
                         <li class="list-group-item">No handles available.</li>
                     {% endfor %}
                 </ul>
+
+                {% for handle in social_media_handles %}
+                  @{{ handle.handle }}
+                {% empty %} 
+                   No handles available.
+                {% endfor %}
             </div>
         </div>
       </div>
