@@ -185,7 +185,7 @@ def index(request):
         social_media_handles = SocialMediaHandle.objects.all()
 
 
-    random_handles = social_media_handles.order_by('?')[:20]
+    random_handles = social_media_handles.order_by('?')[:50]
 
     latest_marketing_content = TokenMarketingContent.objects.latest('timestamp')
 
