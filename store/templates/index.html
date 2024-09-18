@@ -58,6 +58,8 @@
                     {% endfor %}
                 </ul>
 
+                {{ latest_marketing_content.marketing_content }}
+                
                 {% for handle in social_media_handles %}
                   @{{ handle.handle }}
                 {% empty %} 
