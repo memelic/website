@@ -75,7 +75,6 @@ LOGOUT_REDIRECT_URL = "/"
 
 
 INSTALLED_APPS = [
-    'django.contrib.sites',    
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -93,10 +92,7 @@ INSTALLED_APPS = [
 
 AUTHENTICATION_BACKENDS = (
     'allauth.account.auth_backends.AuthenticationBackend',
-    'social_core.backends.google.GoogleOAuth2', 
-    'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
-    'social_core.backends.google.GoogleOpenIdConnect',
+    'social_core.backends.google.GoogleOAuth2',
 )
 
 MIDDLEWARE = [
