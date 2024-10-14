@@ -57,8 +57,8 @@ CORS_ALLOWED_ORIGINS = [
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['149.28.88.228','www.memelic.com','memelic.com', 'localhost', '127.0.0.1']
-CSRF_TRUSTED_ORIGINS = ['http://149.28.88.228','http://www.memelic.fun','http://memelic.fun']
+ALLOWED_HOSTS = ['149.28.88.228','www.schizou.com','schizou.com', 'localhost', '127.0.0.1']
+CSRF_TRUSTED_ORIGINS = ['http://149.28.88.228','http://www.schizou.com','http://schizou.com']
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
