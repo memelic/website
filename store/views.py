@@ -135,7 +135,7 @@ def generate_response():
 # View to forward to x.com
 def forward_to_x(request): 
     msg = generate_response()
-    encoded_msg = urllib.parse.quote(msg + " #schizou $schizou https://schizou.com/static/images/schizo_logo.png")
+    encoded_msg = urllib.parse.quote(msg.strip('"') + " #schizou $schizou")
     return redirect('https://x.com/intent/post?text=' + encoded_msg)
 
 
