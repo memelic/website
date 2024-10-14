@@ -187,7 +187,7 @@ def index(request):
 
     random_handles = social_media_handles.order_by('?')[:50]
 
-    latest_marketing_content = TokenMarketingContent.objects.latest('timestamp')
+    latest_marketing_content = None
 
     context = {
         'access_token': access_token,
