@@ -123,7 +123,7 @@ def generate_response():
         model='gpt-3.5-turbo',
         messages=[
             {"role": "system", "content": "You are a helpful assistant " + random_author},
-            {"role": "user", "content": "generate a short tweet about 80 characters long max, why people should buy the milly token, it's a cute dog token, dogs name is Milly as in a million dollars, make it positive, funny, intresting and pardoxical"},
+            {"role": "user", "content": "generate a short tweet about 80 characters long max, about me graduating Schizo University, make it positive, funny, intresting and pardoxical"},
         ])
 
     message_gpt = response.choices[0]['message']['content']
@@ -135,9 +135,9 @@ def generate_response():
 # View to forward to x.com
 def forward_to_x(request): 
     msg = generate_response()
-    encoded_msg = urllib.parse.quote(msg + " #milly $milly 8kMmmuUjxArge9PJSZuj4PUj5w9XizwynJbwKNeipump")
+    encoded_msg = urllib.parse.quote(msg + " #schizou $schizou")
     return redirect('https://x.com/intent/post?text=' + encoded_msg)
-    
+
 
 class TokenMarketingContentCreateView(View):
 
