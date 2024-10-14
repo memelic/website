@@ -123,7 +123,7 @@ def generate_response():
         model='gpt-3.5-turbo',
         messages=[
             {"role": "system", "content": "You are a helpful assistant " + random_author},
-            {"role": "user", "content": "generate a short tweet about 80 characters long max, about me graduating Schizo University, make it positive, funny, intresting and pardoxical"},
+            {"role": "user", "content": "generate a short tweet about 80 characters long max, about me graduating Schizo University because i am cured and no longer schizo time to connect with alumni, make it positive, funny, intresting and pardoxical"},
         ])
 
     message_gpt = response.choices[0]['message']['content']
