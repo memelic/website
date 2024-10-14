@@ -12,60 +12,16 @@
 
       <div class="row">
         <div class="col-md-12">
-          <h1 class="text-center mt-5 mb-4">Welcome to memelic.com</h1>
-          <h3 class="text-center mb-4">alpha v{{pokerGPT_version}}</h3>     
+          <h1 class="text-center mt-5 mb-4">Welcome to schizou.com</h1>  
         </div>  
       </div>            
         <div class="row">
           <div class="col-md-12">
 
-            <p>
-              <code>
-              {{ latest_marketing_content.marketing_content }}
-              </code>
+            <p> <img src="/static/images/schizo.png" />
             </p>
-            <p>Contract Address: <a href="https://pump.fun/{{ latest_marketing_content.contract_address }}" >{{ latest_marketing_content.contract_address }}</a> </p>
-            <p>Posted on: {{ latest_marketing_content.timestamp }}</p>
-
-            <div class="intro-text">
-                <h1 class="mb-4">Memelic Social Media Handles</h1>
-
-                <div class="mb-3">
-                    <!-- Filter links -->
-                    <a href="?filter=all" class="btn btn-outline-primary btn-sm {% if filter_option == 'all' %}active{% endif %}">All</a>
-                    <a href="?filter=active" class="btn btn-outline-success btn-sm {% if filter_option == 'active' %}active{% endif %}">Active</a>
-                    <a href="?filter=inactive" class="btn btn-outline-danger btn-sm {% if filter_option == 'inactive' %}active{% endif %}">Inactive</a>
-                </div>
-                <ul class="list-group">
-                    {% for handle in social_media_handles %}
-                        <li class="list-group-item d-flex justify-content-between align-items-center">
-                            <div>
-                                <span class="text-primary">{{ forloop.counter }}.</span> 
-                                <a href="https://x.com/{{ handle.handle }}" target="_blank">
-                                    {{ handle.handle }}
-                                </a> 
-                                <span class="text-primary"> {{ handle.follower_count }}</span> 
-                                - {% if handle.is_active %} <span class="badge bg-success">Active</span> {% else %} <span class="badge bg-secondary">Inactive</span> {% endif %}
-                            </div>
-                            <div>
-                                <a href="{% url 'toggle_handle_status' handle.id %}" class="btn btn-sm {% if handle.is_active %}btn-danger{% else %}btn-success{% endif %}">
-                                    {% if handle.is_active %} Deactivate {% else %} Activate {% endif %}
-                                </a>
-                            </div>
-                        </li>
-                    {% empty %}
-                        <li class="list-group-item">No handles available.</li>
-                    {% endfor %}
-                </ul>
-
-                {{ latest_marketing_content.marketing_content }}
-
-                {% for handle in social_media_handles %}
-                  @{{ handle.handle }} 
-                {% empty %} 
-                   No handles available.
-                {% endfor %}
-            </div>
+             
+          </div>
         </div>
       </div>
     
