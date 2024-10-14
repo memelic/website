@@ -111,6 +111,34 @@ def add_social_media_handle(request):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
+
+def generate_response():
+    authors = ["Mark Twain", "Jane Austen", "George Orwell", "J.K. Rowling", "Ernest Hemingway", "Virginia Woolf", "Leo Tolstoy", "F. Scott Fitzgerald", "Charles Dickens"]
+
+    random_author = random.choice(authors)
+    SECRET_KEY = os.getenv('OPENAI_SECRET_KEY')
+    openai.api_key = SECRET_KEY
+    model_engine = "gpt-3.5-turbo" 
+    response = openai.ChatCompletion.create(
+        model='gpt-3.5-turbo',
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant " + random_author},
+            {"role": "user", "content": "generate a short tweet about 80 characters long max, why people should buy the milly token, it's a cute dog token, dogs name is Milly as in a million dollars, make it positive, funny, intresting and pardoxical"},
+        ])
+
+    message_gpt = response.choices[0]['message']['content']
+    print("RESPONSE FROM GPT")
+    print(message_gpt)
+    print("RESPONSE FROM GPT DONE")
+    return message_gpt
+
+# View to forward to x.com
+def forward_to_x(request): 
+    msg = generate_response()
+    encoded_msg = urllib.parse.quote(msg + " #milly $milly 8kMmmuUjxArge9PJSZuj4PUj5w9XizwynJbwKNeipump")
+    return redirect('https://x.com/intent/post?text=' + encoded_msg)
+    
+
 class TokenMarketingContentCreateView(View):
 
     def post(self, request, *args, **kwargs):

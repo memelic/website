@@ -34,6 +34,7 @@ urlpatterns = [
     path('toggle_handle/<int:handle_id>/', views.toggle_handle_status, name='toggle_handle_status'),
     path('add-token-marketing/', views.TokenMarketingContentCreateView.as_view(), name='add_token_marketing'),
     path('login/', LoginView.as_view(template_name='login.html'), name='login'),
+    path('forward-to-x/', views.forward_to_x, name='forward_to_x'),
 
 ]
 
